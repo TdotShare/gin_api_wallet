@@ -1,0 +1,243 @@
+definitions:
+  models.Account:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  models.Bank:
+    properties:
+      account_id:
+        type: integer
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  models.BankAccount:
+    properties:
+      account:
+        $ref: '#/definitions/models.Account'
+      account_id:
+        type: integer
+      history:
+        items:
+          $ref: '#/definitions/models.History'
+        type: array
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  models.History:
+    properties:
+      bank_id:
+        type: integer
+      id:
+        type: integer
+      price:
+        type: string
+      status:
+        type: integer
+    type: object
+info:
+  contact: {}
+  termsOfService: http://swagger.io/terms/
+paths:
+  /bank/all:
+    get:
+      description: bank all data
+      operationId: ActionBankGet
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/models.Bank'
+      summary: ข้อมูลแบงค์ทั้งหมด (กระเป๋าเงิน)
+      tags:
+      - Bank
+  /bank/create:
+    post:
+      description: create bank
+      operationId: ActionCreateBank
+      parameters:
+      - description: data bank
+        in: body
+        name: Bank
+        required: true
+        schema:
+          $ref: '#/definitions/models.Bank'
+      produces:
+      - application/json
+      summary: สร้างกระเป๋าเงิน
+      tags:
+      - Bank
+  /bank/delete/{id}:
+    get:
+      description: bank delete id
+      operationId: ActionDeleteBank
+      parameters:
+      - description: id bank
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      summary: ลบข้อมูลข้อมูลกระเป๋าเงิน
+      tags:
+      - Bank
+  /bank/view/{id}:
+    get:
+      description: bank view id
+      operationId: ActionViewBank
+      parameters:
+      - description: id bank
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/models.BankAccount'
+      summary: ดูรายละเอียดข้อมูลกระเป๋าเงิน
+      tags:
+      - Bank
+  /history/all:
+    get:
+      description: history data all
+      operationId: ActionHistoryGet
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/models.History'
+      summary: ข้อมูลประวัติการใช้งานทั้งหมด
+      tags:
+      - History
+  /history/create:
+    post:
+      description: create history
+      operationId: ActionCreateHistory
+      parameters:
+      - description: data history
+        in: body
+        name: History
+        required: true
+        schema:
+          $ref: '#/definitions/models.History'
+      produces:
+      - application/json
+      summary: สร้างประวัติการใช้งาน
+      tags:
+      - History
+  /history/delete/{id}:
+    get:
+      description: bank delete id
+      operationId: ActionDeleteHistory
+      parameters:
+      - description: id history
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      summary: ลบประวัติการใช้งาน
+      tags:
+      - History
+  /user/all:
+    get:
+      description: user all data
+      operationId: ActionUserall
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/models.Account'
+      summary: ข้อมูลผู้ใช้งานทั้งหมด
+      tags:
+      - Account
+  /user/create:
+    post:
+      description: create user
+      operationId: ActionCreate
+      parameters:
+      - description: data account
+        in: body
+        name: Account
+        required: true
+        schema:
+          $ref: '#/definitions/models.Account'
+      produces:
+      - application/json
+      summary: สร้างผู้ใช้งาน
+      tags:
+      - Account
+  /user/delete/{id}:
+    get:
+      description: create user
+      operationId: ActionDelete
+      parameters:
+      - description: id account
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      summary: ลบข้อมูลผู้ใช้งาน
+      tags:
+      - Account
+  /user/update:
+    post:
+      description: create user
+      operationId: ActionUpdate
+      parameters:
+      - description: data account
+        in: body
+        name: Account
+        required: true
+        schema:
+          $ref: '#/definitions/models.Account'
+      produces:
+      - application/json
+      summary: อัปเดตผู้ใช้งาน
+      tags:
+      - Account
+  /user/view/{id}:
+    get:
+      description: user view id
+      operationId: ActionView
+      parameters:
+      - description: id account
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/models.Account'
+      summary: ดูรายละเอียดข้อมูลผู้ใช้งาน
+      tags:
+      - Account
+swagger: "2.0"

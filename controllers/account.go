@@ -4,15 +4,23 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"main/config"
+	"main/models"
 	"net/http"
-	"root/config"
-	"root/models"
 
 	"github.com/gin-gonic/gin"
 )
 
 type AccountController struct{}
 
+// ActionUserall godoc
+// @tags Account
+// @summary ข้อมูลผู้ใช้งานทั้งหมด
+// @description user all data
+// @id ActionUserall
+// @produce json
+// @response 200 {object} models.Account "Success"
+// @router /user/all [get]
 func (a AccountController) ActionUserall(c *gin.Context) {
 
 	db, err := config.Connect()
@@ -48,6 +56,15 @@ func (a AccountController) ActionUserall(c *gin.Context) {
 
 }
 
+// ActionView godoc
+// @tags Account
+// @summary ดูรายละเอียดข้อมูลผู้ใช้งาน
+// @description user view id
+// @id ActionView
+// @param id path int true "id account"
+// @produce json
+// @response 200 {object} models.Account "Success"
+// @router /user/view/{id} [get]
 func (a AccountController) ActionView(c *gin.Context) {
 	id := c.Param("id")
 
@@ -68,6 +85,14 @@ func (a AccountController) ActionView(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "fun ActionView", "data": account})
 }
 
+// ActionCreate godoc
+// @tags Account
+// @summary สร้างผู้ใช้งาน
+// @description create user
+// @id ActionCreate
+//@param Account body models.Account true "data account"
+// @produce json
+// @router /user/create [post]
 func (a AccountController) ActionCreate(c *gin.Context) {
 
 	mapbody := make(map[string]string)
@@ -104,6 +129,14 @@ func (a AccountController) ActionCreate(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Create Data Success !", "data": nil})
 }
 
+// ActionUpdate godoc
+// @tags Account
+// @summary อัปเดตผู้ใช้งาน
+// @description create user
+// @id ActionUpdate
+//@param Account body models.Account true "data account"
+// @produce json
+// @router /user/update [post]
 func (a AccountController) ActionUpdate(c *gin.Context) {
 
 	mapbody := make(map[string]string)
@@ -134,6 +167,14 @@ func (a AccountController) ActionUpdate(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Update Data Success !", "data": mapbody})
 }
 
+// ActionDelete godoc
+// @tags Account
+// @summary ลบข้อมูลผู้ใช้งาน
+// @description create user
+// @id ActionDelete
+// @param id path int true "id account"
+// @produce json
+// @router /user/delete/{id} [get]
 func (a AccountController) ActionDelete(c *gin.Context) {
 
 	id := c.Param("id")

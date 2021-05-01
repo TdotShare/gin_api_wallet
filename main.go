@@ -1,13 +1,26 @@
 package main
 
 import (
-	"root/controllers"
+	"main/controllers"
+
+	"main/docs"
 
 	"github.com/gin-gonic/gin"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
 )
+
+// @termsOfService http://swagger.io/terms/
 
 func main() {
 	r := gin.Default()
+
+	docs.SwaggerInfo.Title = "GIN WALLET API"
+	docs.SwaggerInfo.Description = "This is a sample server Petstore server."
+	docs.SwaggerInfo.Version = "1.0"
+	//docs.SwaggerInfo.Host = "petstore.swagger.io"
+	//docs.SwaggerInfo.BasePath = "/v2"
+	docs.SwaggerInfo.Schemes = []string{"http", "https"}
 
 	routerGroup := r.Group("/api")
 	{
@@ -45,6 +58,8 @@ func main() {
 	r.NoRoute(func(c *gin.Context) {
 		c.JSON(404, gin.H{"code": "PAGE_NOT_FOUND", "message": "Page not found"})
 	})
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }

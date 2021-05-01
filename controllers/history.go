@@ -4,15 +4,23 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"main/config"
+	"main/models"
 	"net/http"
-	"root/config"
-	"root/models"
 
 	"github.com/gin-gonic/gin"
 )
 
 type HistoryController struct{}
 
+// ActionHistoryGet godoc
+// @tags History
+// @id ActionHistoryGet
+// @summary ข้อมูลประวัติการใช้งานทั้งหมด
+// @description history data all
+// @produce json
+// @response 200 {object} models.History "Success"
+// @router /history/all [get]
 func (h HistoryController) ActionHistoryGet(c *gin.Context) {
 	db, err := config.Connect()
 
@@ -31,6 +39,14 @@ func (h HistoryController) ActionHistoryGet(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "fun ActionHistoryGet", "data": history})
 }
 
+// ActionCreate godoc
+// @tags History
+// @summary สร้างประวัติการใช้งาน
+// @description create history
+// @id ActionCreateHistory
+//@param History body models.History true "data history"
+// @produce json
+// @router /history/create [post]
 func (h HistoryController) ActionCreate(c *gin.Context) {
 
 	db, err := config.Connect()
@@ -68,6 +84,14 @@ func (h HistoryController) ActionCreate(c *gin.Context) {
 
 }
 
+// ActionDelete godoc
+// @tags History
+// @id ActionDeleteHistory
+// @summary ลบประวัติการใช้งาน
+// @description bank delete id
+// @param id path int true "id history"
+// @produce json
+// @router /history/delete/{id} [get]
 func (h HistoryController) ActionDelete(c *gin.Context) {
 
 	id := c.Param("id")
